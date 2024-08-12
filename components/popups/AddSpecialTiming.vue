@@ -133,9 +133,9 @@ async function onSubmit (event: FormSubmitEvent<any>) {
 
 const initialValues = () => {
   state.id = props.item.id
-  state.date = props.item.date
-  state.start_time = props.item.start_time
-  state.end_time = props.item.end_time
+  state.date = new Date(props.item.date)
+  state.start_time = new Date( props.item.start_time)
+  state.end_time = new Date(props.item.end_time)
   state.house_id = props.item.house_id
 }
 

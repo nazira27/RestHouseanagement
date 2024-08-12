@@ -287,6 +287,30 @@ export const useRestHousesStore = defineStore('restHouse', {
             } else {
                 console.warn(`Item with id ${id} not found.`);
             }
-        }
-    },
+        },
+        deleteRestHouse(item: any) {
+            const index = this.data.findIndex((item: any) => item.id === item.id);
+            if (index > -1) {
+                this.data.splice(index, 1);
+            } else {
+                console.warn(`The item not found.`);
+            }
+        },
+        deletePeriod(id: any, periodTitle: string) {
+            const index = this.data.findIndex((item: any) => item.id === id);
+            if (index > -1) {
+                const item = this.data[index];
+                const periodIndex = item?.period?.findIndex((p: any) => p?.title === periodTitle);
+
+                if (periodIndex > -1) {
+                    item.period.splice(periodIndex, 1);
+                    delete item.prices[periodTitle];
+                } else {
+                    console.warn(`Period with title "${periodTitle}" not found in item with id ${id}.`);
+                }
+            } else {
+                console.warn(`Item with id ${id} not found.`);
+            }
+        },
+    }
 })

@@ -83,7 +83,7 @@ const back = () => {
 }
 
 const deleteItem = (item:any) => {
-  console.log(item)
+  store.deleteItem(item)
 }
 
 </script>

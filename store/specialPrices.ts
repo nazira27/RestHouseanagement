@@ -49,6 +49,14 @@ export const useSpecialPriceStore = defineStore('specialPrice', {
             } else {
                 console.warn(`Item with id ${el.id} not found.`);
             }
-        }
+        },
+        deleteItem(el: any) {
+            const index = this.data.findIndex((item: any) => item.id === el?.id);
+            if (index !== -1) {
+                this.data.splice(index, 1);
+            } else {
+                console.warn(`The item not found.`);
+            }
+        },
     },
 })

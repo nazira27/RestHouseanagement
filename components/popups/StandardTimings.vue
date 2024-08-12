@@ -59,6 +59,7 @@
 <script setup lang="ts">
 import AddPeriod from './AddPeriod.vue'
 import {onMounted} from "@vue/runtime-core";
+import {useRestHousesStore} from "../../store/restHouses";
 
 const props = defineProps({
   item: {
@@ -74,6 +75,7 @@ const periods = ref([])
 const prices = ref([])
 const activeItem = ref({})
 const isEdit = ref(false)
+const store = useRestHousesStore()
 
 const handleClose = () => {
   isOpen.value = false
@@ -102,8 +104,8 @@ const openEditModal = (item:any) => {
   isEditModalOpen.value = true
 }
 
-const deleteItem = (item:any) => {
-  console.log(item)
+const deleteItem = (el:any) => {
+  store.deletePeriod(props.item.id, el.title)
 }
 
 const back = () => {
