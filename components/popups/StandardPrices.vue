@@ -33,7 +33,12 @@
    <div class="flex justify-end mt-4">
      <ul>
        <li v-for="part in item.parts" class="flex items-center gap-3">
-         <UIcon name="heroicons:clock-16-solid" class="w-5 h-5 text-primary" /> {{part.startTime}} - {{part.endTime}}
+         <UIcon name="heroicons:clock-16-solid" class="w-5 h-5 text-primary" /> {{}}
+         {{
+           isDate(part.startTime)
+         ? format(new Date(part.startTime), 'hh:mm a') + ' - '+ format(new Date(part.startTime), 'hh:mm a')
+           : part.startTime + ' - ' + part.endTime
+         }}
        </li>
      </ul>
    </div>
@@ -59,6 +64,7 @@
 import AddPeriod from './AddPeriod.vue'
 import {onMounted} from "@vue/runtime-core";
 import {useRestHousesStore} from "../../store/restHouses";
+import { parse, format } from 'date-fns';
 
 const props = defineProps({
   modelValue: {
@@ -95,6 +101,9 @@ const closeEditModal = () => {
   activeItem.value = {}
 }
 
+const parseTime = (timeString:string, dateFormat = 'hh:mm a') => parse(timeString, dateFormat, new Date());
+const isDate = (value:any) => value instanceof Date;
+
 const openEditModal = (item:any) => {
   activeItem.value = {
     houseId: props.item?.id,
@@ -105,8 +114,8 @@ const openEditModal = (item:any) => {
   }
   item?.parts?.forEach((el:any) => {
     activeItem.value.timeSlots.push({
-      startTime: el.startTime,
-      endTime: el.endTime,
+      startTime: parseTime(el.startTime),
+      endTime: parseTime(el.endTime),
     })
   })
   isEdit.value = true

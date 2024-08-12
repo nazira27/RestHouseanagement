@@ -22,16 +22,29 @@
             +
           </UButton>
         </div>
+
+
         <div v-for="(slot, index) in state.timeSlots" :key="index" class="flex w-full gap-1 mt-1">
           <div class="w-[46%]">
             <UFormGroup name="startTime">
-              <UInput v-model="slot.startTime" />
+              <UPopover :popper="{ placement: 'bottom-start' }">
+                <UButton class="w-full" icon="i-heroicons-calendar-days-20-solid" :label="slot.startTime ? format(slot.startTime, 'hh:mm a') : 'Select time'" />
+                <template #panel="{ close }">
+                  <VDatePicker v-model="slot.startTime" mode="time" hide-time-header @change="close"/>
+                </template>
+              </UPopover>
             </UFormGroup>
           </div>
 
           <div class="w-[46%]">
-            <UFormGroup name="endTime">
-              <UInput v-model="slot.endTime" />
+            <UFormGroup name="end_time">
+              <UPopover :popper="{ placement: 'bottom-start' }">
+                <UButton class="w-full" icon="i-heroicons-calendar-days-20-solid" :label="slot.endTime ? format(slot.endTime, 'hh:mm a') : 'Select time'" />
+
+                <template #panel="{ close }">
+                  <VDatePicker v-model="slot.endTime" mode="time" hide-time-header @change="close"/>
+                </template>
+              </UPopover>
             </UFormGroup>
           </div>
 
@@ -94,15 +107,6 @@ let state = reactive({
   weekday: null
 })
 
-const hours = computed(() => new Date().getHours().toString().padStart(2, '0'));
-const minutes = computed(() => new Date().getMinutes().toString().padStart(2, '0'));
-const timeString = computed(() => {
-  const ampm = hours.value >= 12 ? 'PM' : 'AM';
-  const hour12 = hours.value % 12 || 12;
-  const minutesPadded = minutes.value.toString().padStart(2, '0');
-  return `${hour12}:${minutesPadded}${ampm}`;
-});
-
 const validate = (state: any): FormError[] => {
   const errors = []
   if (state.timeSlots.some((slot:any) => !slot.startTime)) errors.push({ path: 'startTime', message: 'Required' })
@@ -144,12 +148,12 @@ async function onSubmit (event: FormSubmitEvent<any>) {
 const initialValues = () => {
   state.weekday = props.item?.weekday
   state.weekend = props.item?.weekend
-  state.timeSlots = props.item.timeSlots || [{ startTime: timeString.value, endTime: timeString.value }]
+  state.timeSlots = props.item.timeSlots || [{ startTime: new Date(), endTime: new Date() }]
   state.title = props.item?.title?.split(' ')?.[0]
 }
 
 const addTimeSlot = () => {
-  state.timeSlots.push({ startTime: timeString.value, endTime: timeString.value })
+  state.timeSlots.push({ startTime: new Date(), endTime: new Date() })
 }
 
 const removeTimeSlot = (index: number) => {
@@ -166,7 +170,7 @@ watch(
       else {
         state = reactive({
           title: null,
-          timeSlots: [{ startTime: timeString.value, endTime: timeString.value }],
+          timeSlots: [{ startTime: new Date(), endTime: new Date() }],
           weekend: null,
           weekday: null
         })

@@ -16,26 +16,25 @@
             <UButton icon="i-heroicons-calendar-days-20-solid" :label="state?.date ? format(state.date, 'd MMM, yyy') : 'Select Date'" />
 
             <template #panel="{ close }">
-              <VDatePicker v-model="state.date" mode="date" is-required @close="close" />
+              <VDatePicker v-model="state.date" mode="date" @close="close" />
             </template>
           </UPopover>
         </UFormGroup>
 
-
         <UFormGroup label="Start time" name="start_time">
           <UPopover :popper="{ placement: 'bottom-start' }">
-            <UButton class="md:w-[50%]" icon="i-heroicons-calendar-days-20-solid" :label="state.start_time ? format(state.start_time, 'd MMM, yyy hh:mm') : 'Select time'" />
+            <UButton class="md:w-[50%]" icon="i-heroicons-calendar-days-20-solid" :label="state.start_time ? format(state.start_time, 'hh:mm a') : 'Select time'" />
             <template #panel="{ close }">
-              <VDatePicker v-model="state.start_time" mode="datetime" hide-time-header />
+              <VDatePicker v-model="state.start_time" mode="time" hide-time-header @change="close"/>
             </template>
           </UPopover>
         </UFormGroup>
         <UFormGroup label="End time" name="end_time">
           <UPopover :popper="{ placement: 'bottom-start' }">
-            <UButton class="md:w-[50%]" icon="i-heroicons-calendar-days-20-solid" :label="state.end_time ? format(state.end_time, 'd MMM, yyy hh:mm') : 'Select time'" />
+            <UButton class="md:w-[50%]" icon="i-heroicons-calendar-days-20-solid" :label="state.end_time ? format(state.end_time, 'hh:mm a') : 'Select time'" />
 
             <template #panel="{ close }">
-              <VDatePicker v-model="state.end_time" mode="datetime" hide-time-header />
+              <VDatePicker v-model="state.end_time" mode="time" hide-time-header @change="close"/>
             </template>
           </UPopover>
         </UFormGroup>
@@ -52,12 +51,12 @@
 </template>
 
 <script setup lang="ts">
-// import type { FormError, FormSubmitEvent } from '#ui/types'
 import { format } from 'date-fns'
 import { DatePicker as VDatePicker } from 'v-calendar'
 import type { DatePickerDate, DatePickerRangeObject } from 'v-calendar/dist/types/src/use/datePicker'
 import 'v-calendar/dist/style.css'
 import {useSpecialTimingStore} from "../../store/specialTimings";
+import {computed} from "vue";
 const toast = useToast()
 
 const props = defineProps({
@@ -78,7 +77,15 @@ const emit = defineEmits(['update:modelValue']);
 const store = useSpecialTimingStore()
 
 const isOpen = ref(false)
-
+const hours = computed(() => new Date().getHours().toString().padStart(2, '0'));
+const minutes = computed(() => new Date().getMinutes().toString().padStart(2, '0'));
+const timeString = computed(() => {
+  const ampm = hours.value >= 12 ? 'PM' : 'AM';
+  const hour12 = hours.value % 12 || 12;
+  const minutesPadded = minutes.value.toString().padStart(2, '0');
+  return `${hour12}:${minutesPadded}${ampm}`;
+});
+const now = computed(() => new Date())
 let state = reactive({
   date: undefined,
   start_time: new Date(),
@@ -122,6 +129,7 @@ async function onSubmit (event: FormSubmitEvent<any>) {
     ...state,
     date: formatDate(state.date)
   }
+  console.log(data)
   if(props.item.id) {
     data['id'] = props.item.id
     store.updateSpecialPrice(data)
@@ -148,9 +156,9 @@ watch(
         initialValues()
       } else {
         state = {
-          date: null,
-          start_time: null,
-          end_time: null,
+          date: new Date(),
+          start_time: new Date(),
+          end_time: new Date(),
         }
         state.house_id = props.houseId
       }

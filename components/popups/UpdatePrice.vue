@@ -23,7 +23,6 @@
       </div>
       <SpecialPrices v-if="type === 'special'" :item="props.item" @back="type = ''"/>
       <StandardPrices v-if="type === 'standard'" :item="props.item" @back="type = ''"/>
-
     </UCard>
   </UModal>
 </template>

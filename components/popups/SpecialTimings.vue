@@ -33,8 +33,7 @@
     <div class="flex justify-between mt-4">
       <UIcon name="heroicons:clock-16-solid" class="w-5 h-5 text-primary" />
       <div>
-        <p>{{new Date(item.start_time).toISOString().replace('T', ' ').replace(/\.\d+Z$/, '')}}</p>
-        <p>{{new Date(item.end_time).toISOString().replace('T', ' ').replace(/\.\d+Z$/, '')}}</p>
+        <p>{{format(new Date(item.start_time), 'hh:mm a')}} - {{format(new Date(item.end_time), 'hh:mm a')}} </p>
       </div>
     </div>
   </UCard>
@@ -49,6 +48,7 @@
 <script setup lang="ts">
 import AddSpecialTimings from './AddSpecialTiming.vue'
 import {useSpecialTimingStore} from "../../store/specialTimings";
+import { format } from 'date-fns'
 
 const props = defineProps({
   modelValue: {

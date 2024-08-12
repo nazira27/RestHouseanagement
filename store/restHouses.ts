@@ -17,16 +17,16 @@ export const useRestHousesStore = defineStore('restHouse', {
                     {
                         "parts": [
                             {
-                                "endTime": "12:00PM",
-                                "startTime": "8:00AM"
+                                "endTime": "12:00 PM",
+                                "startTime": "8:00 AM"
                             },
                             {
-                                "endTime": "5:00PM",
-                                "startTime": "1:00PM"
+                                "endTime": "5:00 PM",
+                                "startTime": "1:00 PM"
                             },
                             {
-                                "endTime": "10:00PM",
-                                "startTime": "6:00PM"
+                                "endTime": "10:00 PM",
+                                "startTime": "6:00 PM"
                             }
                         ],
                         "title": "4 hours"
@@ -34,12 +34,12 @@ export const useRestHousesStore = defineStore('restHouse', {
                     {
                         "parts": [
                             {
-                                "endTime": "2:00PM",
-                                "startTime": "8:00AM"
+                                "endTime": "2:00 PM",
+                                "startTime": "8:00 AM"
                             },
                             {
-                                "endTime": "9:00PM",
-                                "startTime": "3:00PM"
+                                "endTime": "9:00 PM",
+                                "startTime": "3:00 PM"
                             }
                         ],
                         "title": "6 hours"
@@ -47,12 +47,12 @@ export const useRestHousesStore = defineStore('restHouse', {
                     {
                         "parts": [
                             {
-                                "endTime": "5:00PM",
-                                "startTime": "8:00AM"
+                                "endTime": "5:00 PM",
+                                "startTime": "8:00 AM"
                             },
                             {
-                                "endTime": "11:59PM",
-                                "startTime": "6:00PM"
+                                "endTime": "11:59 PM",
+                                "startTime": "6:00 PM"
                             }
                         ],
                         "title": "9 hours"
@@ -88,16 +88,16 @@ export const useRestHousesStore = defineStore('restHouse', {
                     {
                         "parts": [
                             {
-                                "endTime": "12:00PM",
-                                "startTime": "8:00AM"
+                                "endTime": "12:00 PM",
+                                "startTime": "8:00 AM"
                             },
                             {
-                                "endTime": "5:00PM",
-                                "startTime": "1:00PM"
+                                "endTime": "5:00 PM",
+                                "startTime": "1:00 PM"
                             },
                             {
-                                "endTime": "10:00PM",
-                                "startTime": "6:00PM"
+                                "endTime": "10:00 PM",
+                                "startTime": "6:00 PM"
                             }
                         ],
                         "title": "4 hours"
@@ -105,12 +105,12 @@ export const useRestHousesStore = defineStore('restHouse', {
                     {
                         "parts": [
                             {
-                                "endTime": "2:00PM",
-                                "startTime": "8:00AM"
+                                "endTime": "2:00 PM",
+                                "startTime": "8:00 AM"
                             },
                             {
-                                "endTime": "9:00PM",
-                                "startTime": "3:00PM"
+                                "endTime": "9:00 PM",
+                                "startTime": "3:00 PM"
                             }
                         ],
                         "title": "6 hours"
@@ -118,12 +118,12 @@ export const useRestHousesStore = defineStore('restHouse', {
                     {
                         "parts": [
                             {
-                                "endTime": "5:00PM",
-                                "startTime": "8:00AM"
+                                "endTime": "5:00 PM",
+                                "startTime": "8:00 AM"
                             },
                             {
-                                "endTime": "11:59PM",
-                                "startTime": "6:00PM"
+                                "endTime": "11:59 PM",
+                                "startTime": "6:00 PM"
                             }
                         ],
                         "title": "9 hours"
@@ -159,16 +159,16 @@ export const useRestHousesStore = defineStore('restHouse', {
                     {
                         "parts": [
                             {
-                                "endTime": "12:00PM",
-                                "startTime": "8:00AM"
+                                "endTime": "12:00 PM",
+                                "startTime": "8:00 AM"
                             },
                             {
-                                "endTime": "5:00PM",
-                                "startTime": "1:00PM"
+                                "endTime": "5:00 PM",
+                                "startTime": "1:00 PM"
                             },
                             {
-                                "endTime": "10:00PM",
-                                "startTime": "6:00PM"
+                                "endTime": "10:00 PM",
+                                "startTime": "6:00 PM"
                             }
                         ],
                         "title": "4 hours"
@@ -176,12 +176,12 @@ export const useRestHousesStore = defineStore('restHouse', {
                     {
                         "parts": [
                             {
-                                "endTime": "2:00PM",
-                                "startTime": "8:00AM"
+                                "endTime": "2:00 PM",
+                                "startTime": "8:00 AM"
                             },
                             {
-                                "endTime": "9:00PM",
-                                "startTime": "3:00PM"
+                                "endTime": "9:00 PM",
+                                "startTime": "3:00 PM"
                             }
                         ],
                         "title": "6 hours"
@@ -189,12 +189,12 @@ export const useRestHousesStore = defineStore('restHouse', {
                     {
                         "parts": [
                             {
-                                "endTime": "5:00PM",
-                                "startTime": "8:00AM"
+                                "endTime": "5:00 PM",
+                                "startTime": "8:00 AM"
                             },
                             {
-                                "endTime": "11:59PM",
-                                "startTime": "6:00PM"
+                                "endTime": "11:59 PM",
+                                "startTime": "6:00 PM"
                             }
                         ],
                         "title": "9 hours"

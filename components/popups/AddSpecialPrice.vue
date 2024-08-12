@@ -128,7 +128,7 @@ watch(
         initialValues()
       } else {
         state = {
-          date: null,
+          date: new Date(),
           special_price: null,
           price_type: null,
         }
