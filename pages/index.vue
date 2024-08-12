@@ -2,7 +2,10 @@
   <UContainer>
     <div class="mt-10 flex justify-between">
       <h1>Welcome to Rest Houses Management System</h1>
-      <USelect v-model="themeColor" :options="['light', 'dark']" class="w-[106px] h-[32px]" />
+      <ColorScheme>
+        <USelect v-model="themeColor" :options="['light', 'dark']" class="w-[106px] h-[32px]" />
+<!--        <USelect v-model="$colorMode.preference" :options="['system', 'light', 'dark']" />-->
+      </ColorScheme>
     </div>
     <UButton
         icon="heroicons:plus-circle-solid"
@@ -37,12 +40,13 @@ const restHouses = computed(() => store.data)
 const isPropertyModalOpen = ref(false);
 
 const colorMode = useColorMode()
+
 const themeColor = computed({
   get () {
     return colorMode.value
   },
-  set () {
-    colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+  set (v:any) {
+    colorMode.preference = v
   }
 })
 

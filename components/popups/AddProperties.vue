@@ -141,6 +141,17 @@ watch(
       isOpen.value = newVal ? newVal : false
       if(newVal && props.isEdit) {
         initialValues()
+      } else {
+        state = {
+          name: undefined,
+          num_room: undefined,
+          num_bath: undefined,
+          description: undefined,
+          location: undefined,
+          capacity: undefined,
+          terms: undefined,
+          phone: undefined,
+        }
       }
     }
 )

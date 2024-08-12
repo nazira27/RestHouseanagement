@@ -33,9 +33,9 @@
   <AddSpecialTimings
     :modelValue="isOpen"
     :item="activeItem"
-    v-model="isOpen"
+    :isEdit="isEdit"
     :houseId="props?.item?.id"
-    @update:modelValue="isOpen=false"
+    @update:modelValue="closeEditModal"
   />
 </template>
 <script setup lang="ts">
@@ -58,8 +58,15 @@ const store = useSpecialTimingStore()
 
 const isOpen = ref(false)
 const activeItem = ref({})
+const isEdit = ref(false)
 
 const timings = computed(() => store.data.filter((item:any) => item.house_id === props.item.id))
+
+const closeEditModal = () => {
+  isOpen.value = false
+  isEdit.value = false
+  activeItem.value = {}
+}
 
 const back = () => {
   emit('back', true)

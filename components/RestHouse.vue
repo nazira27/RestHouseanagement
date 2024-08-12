@@ -60,13 +60,13 @@
       @update:modelValue="isPropertyModalOpen=false"
   />
 
-  <SelectType
+  <UpdateTime
       :modelValue="isSelectModalOpen"
       :item="props.item"
       @update:modelValue="isSelectModalOpen=false"
   />
 
-  <Prices
+  <UpdatePrice
       :modelValue="isSpecialPriceModalOpen"
       :item="props.item"
       @update:modelValue="isSpecialPriceModalOpen=false"
@@ -74,8 +74,8 @@
 </template>
 <script setup lang="ts">
 import AddProperties from './popups/AddProperties.vue'
-import SelectType from './popups/SelectType.vue'
-import Prices from './popups/Prices.vue'
+import UpdateTime from './popups/UpdateTime.vue'
+import UpdatePrice from './popups/UpdatePrice.vue'
 
 const props = defineProps({
   item: {

@@ -4,7 +4,7 @@
       <template #header>
         <div class="flex items-center justify-between">
           <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-            {{props.item?.id ? 'Edit Time' : 'Add Time'}}
+            {{props.item?.id ? 'Edit Price' : 'Add Price'}}
           </h3>
           <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1" @click="handleClose" />
         </div>
@@ -21,25 +21,13 @@
           </UPopover>
         </UFormGroup>
 
-
-        <UFormGroup label="Start time" name="start_time">
-          <UPopover :popper="{ placement: 'bottom-start' }">
-            <UButton class="md:w-[50%]" icon="i-heroicons-calendar-days-20-solid" :label="state.start_time ? format(state.start_time, 'd MMM, yyy hh:mm') : 'Select time'" />
-            <template #panel="{ close }">
-              <VDatePicker v-model="state.start_time" mode="datetime" hide-time-header />
-            </template>
-          </UPopover>
-        </UFormGroup>
-        <UFormGroup label="End time" name="end_time">
-          <UPopover :popper="{ placement: 'bottom-start' }">
-            <UButton class="md:w-[50%]" icon="i-heroicons-calendar-days-20-solid" :label="state.end_time ? format(state.end_time, 'd MMM, yyy hh:mm') : 'Select time'" />
-
-            <template #panel="{ close }">
-              <VDatePicker v-model="state.end_time" mode="datetime" hide-time-header />
-            </template>
-          </UPopover>
+        <UFormGroup label="Price" name="special_price">
+          <UInput v-model="state.special_price" />
         </UFormGroup>
 
+        <UFormGroup label="Select price type" name="price_type">
+          <URadioGroup v-model="state.price_type" :options="['whole', 'partial']" />
+        </UFormGroup>
         <div class="text-right">
           <UButton type="submit">
             {{props.item?.id ? 'Update' : 'Create'}}
@@ -57,7 +45,7 @@ import { format } from 'date-fns'
 import { DatePicker as VDatePicker } from 'v-calendar'
 import type { DatePickerDate, DatePickerRangeObject } from 'v-calendar/dist/types/src/use/datePicker'
 import 'v-calendar/dist/style.css'
-import {useSpecialTimingStore} from "../../store/specialTimings";
+import {useSpecialPriceStore} from "../../store/specialPrices";
 const toast = useToast()
 
 const props = defineProps({
@@ -75,14 +63,14 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue']);
-const store = useSpecialTimingStore()
+const store = useSpecialPriceStore()
 
 const isOpen = ref(false)
 
 let state = reactive({
   date: undefined,
-  start_time: new Date(),
-  end_time: new Date(),
+  special_price: null,
+  price_type: null,
   house_id: ''
 })
 
@@ -90,8 +78,8 @@ let state = reactive({
 const validate = (state: any): FormError[] => {
   const errors = []
   if (!state.title) errors.push({ path: 'title', message: 'Required' })
-  if (!state.start_time) errors.push({ path: 'start_time', message: 'Required' })
-  if (!state.end_time) errors.push({ path: 'end_time', message: 'Required' })
+  if (!state.special_price) errors.push({ path: 'special_price', message: 'Required' })
+  if (!state.price_type) errors.push({ path: 'price_type', message: 'Required' })
   return errors
 }
 
@@ -110,19 +98,11 @@ function formatDate(v:any) {
 }
 
 async function onSubmit (event: FormSubmitEvent<any>) {
-  if(!state.date || !state.start_time || !state.end_time) {
-    toast.add({
-      id: 'warning',
-      title: 'Warning',
-      description: 'Fill all input',
-    })
-    return
-  }
   const data = {
     ...state,
     date: formatDate(state.date)
   }
-  if(props.item.id) {
+  if(props.isEdit && props.item.id) {
     data['id'] = props.item.id
     store.updateSpecialPrice(data)
   } else {
@@ -133,10 +113,10 @@ async function onSubmit (event: FormSubmitEvent<any>) {
 
 const initialValues = () => {
   state.id = props.item.id
-  state.date = props.item.date
-  state.start_time = props.item.start_time
-  state.end_time = props.item.end_time
-  state.house_id = props.item.house_id
+  state.date = new Date(props.item.date)
+  state.special_price = props.item.special_price
+  state.price_type = props.item.price_type
+  state.house_id = props.item.houseId
 }
 
 watch(
@@ -149,8 +129,8 @@ watch(
       } else {
         state = {
           date: null,
-          start_time: null,
-          end_time: null,
+          special_price: null,
+          price_type: null,
         }
         state.house_id = props.houseId
       }

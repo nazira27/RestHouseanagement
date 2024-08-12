@@ -33,9 +33,8 @@ export const useSpecialPriceStore = defineStore('specialPrice', {
     actions: {
         addSpecialPrice(item:any) {
             const exists = this.data.some((existingItem:any) => existingItem?.id === item?.id);
-
             if (!exists) {
-                if (item.id === undefined) {
+                if (!item.id) {
                     item.id = this.nextId++;
                 }
                 this.data.push(item);
@@ -47,7 +46,6 @@ export const useSpecialPriceStore = defineStore('specialPrice', {
             let index = this.data.findIndex((item:any) => item?.id === el?.id);
             if (index !== -1) {
                 this.data[index] = el;
-                console.log(this.data, 'edited')
             } else {
                 console.warn(`Item with id ${el.id} not found.`);
             }

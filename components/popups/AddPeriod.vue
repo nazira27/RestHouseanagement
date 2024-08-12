@@ -11,8 +11,9 @@
       </template>
 
       <UForm :validate="validate" :state="state" class="space-y-4" @submit="onSubmit">
-        <UFormGroup label="Title" name="title">
-          <UInput v-model="state.title" />
+        <UFormGroup label="Title (hours)" name="title">
+          <URange size="md" v-model="state.title" :max="24"/>
+          <label v-if="state.title" class="text-xs">{{state.title}} hours</label>
         </UFormGroup>
 
         <div class="flex justify-between">
@@ -23,11 +24,15 @@
         </div>
         <div v-for="(slot, index) in state.timeSlots" :key="index" class="flex w-full gap-1 mt-1">
           <div class="w-[46%]">
-            <UInput v-model="slot.startTime" />
+            <UFormGroup name="startTime">
+              <UInput v-model="slot.startTime" />
+            </UFormGroup>
           </div>
 
           <div class="w-[46%]">
-            <UInput v-model="slot.endTime" />
+            <UFormGroup name="endTime">
+              <UInput v-model="slot.endTime" />
+            </UFormGroup>
           </div>
 
           <div class="w-[6%]">
@@ -62,6 +67,7 @@ import { format } from 'date-fns'
 import { DatePicker as VDatePicker } from 'v-calendar'
 import type { DatePickerDate, DatePickerRangeObject } from 'v-calendar/dist/types/src/use/datePicker'
 import 'v-calendar/dist/style.css'
+import {computed} from "vue";
 
 const props = defineProps({
   modelValue: {
@@ -82,12 +88,20 @@ const store = useRestHousesStore()
 const isOpen = ref(false)
 
 let state = reactive({
-  title: undefined,
+  title: 0,
   timeSlots: [{ startTime: new Date(), endTime: new Date() }],
-  weekend: '',
-  weekday: ''
+  weekend: null,
+  weekday: null
 })
 
+const hours = computed(() => new Date().getHours().toString().padStart(2, '0'));
+const minutes = computed(() => new Date().getMinutes().toString().padStart(2, '0'));
+const timeString = computed(() => {
+  const ampm = hours.value >= 12 ? 'PM' : 'AM';
+  const hour12 = hours.value % 12 || 12;
+  const minutesPadded = minutes.value.toString().padStart(2, '0');
+  return `${hour12}:${minutesPadded}${ampm}`;
+});
 
 const validate = (state: any): FormError[] => {
   const errors = []
@@ -108,10 +122,10 @@ async function onSubmit (event: FormSubmitEvent<any>) {
   const data = {
     period: {
       "parts": state.timeSlots,
-      "title": state.title
+      "title": state.title + ' hours'
     },
     prices: {
-      title: state.title,
+      title: state.title + ' hours',
       weekday: state.weekday,
       weekend: state.weekend
     }
@@ -128,10 +142,10 @@ async function onSubmit (event: FormSubmitEvent<any>) {
 }
 
 const initialValues = () => {
-  state.title = props.item.title
-  state.weekday = props.item.weekday
-  state.weekend = props.item.weekend
-  state.timeSlots = props.item.timeSlots || [{ startTime: new Date(), endTime: new Date() }]
+  state.weekday = props.item?.weekday
+  state.weekend = props.item?.weekend
+  state.timeSlots = props.item.timeSlots || [{ startTime: timeString.value, endTime: timeString.value }]
+  state.title = props.item?.title?.split(' ')?.[0]
 }
 
 const addTimeSlot = () => {
@@ -148,6 +162,14 @@ watch(
       isOpen.value = newVal ? newVal : false
       if(newVal && props.isEdit) {
         initialValues()
+      }
+      else {
+        state = reactive({
+          title: null,
+          timeSlots: [{ startTime: timeString.value, endTime: timeString.value }],
+          weekend: null,
+          weekday: null
+        })
       }
     }
 )

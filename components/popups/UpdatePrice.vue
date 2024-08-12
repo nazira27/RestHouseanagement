@@ -4,7 +4,7 @@
       <template #header>
         <div class="flex items-center justify-between">
           <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-            Edit timing
+            Edit Price
           </h3>
           <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1" @click="handleClose" />
         </div>
@@ -21,15 +21,15 @@
           </template>
         </UButton>
       </div>
-      <SpecialTimings v-if="type === 'special'" :item="props.item" @back="type = ''"/>
-      <StandardTimings v-if="type === 'standard'" :item="props.item" @back="type = ''"/>
+      <SpecialPrices v-if="type === 'special'" :item="props.item" @back="type = ''"/>
+      <StandardPrices v-if="type === 'standard'" :item="props.item" @back="type = ''"/>
 
     </UCard>
   </UModal>
 </template>
 <script setup lang="ts">
-import SpecialTimings from './SpecialTimings.vue'
-import StandardTimings from './StandardTimings.vue'
+import SpecialPrices from './SpecialPrices.vue'
+import StandardPrices from './StandardPrices.vue'
 
 const props = defineProps({
   modelValue: {

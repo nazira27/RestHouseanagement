@@ -35,13 +35,11 @@ export const useSpecialTimingStore = defineStore('specialTiming', {
         addSpecialPrice(item:any) {
             const exists = this.data.some((existingItem:any) => existingItem?.id === item?.id);
 
-            console.log(item)
             if (!exists) {
-                if (item.id === undefined) {
+                if (!item.id) {
                     item.id = this.nextId++;
                 }
                 this.data.push(item);
-                // console.log(this.data)
             } else {
                 console.warn(`Item with id ${item.id} already exists.`);
             }
