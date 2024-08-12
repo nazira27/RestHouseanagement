@@ -116,7 +116,7 @@ const initialValues = () => {
   state.date = new Date(props.item.date)
   state.special_price = props.item.special_price
   state.price_type = props.item.price_type
-  state.house_id = props.item.houseId
+  state.house_id = props.item.house_id
 }
 
 watch(

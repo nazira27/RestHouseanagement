@@ -149,7 +149,7 @@ const initialValues = () => {
 }
 
 const addTimeSlot = () => {
-  state.timeSlots.push({ startTime: new Date(), endTime: new Date() })
+  state.timeSlots.push({ startTime: timeString.value, endTime: timeString.value })
 }
 
 const removeTimeSlot = (index: number) => {
