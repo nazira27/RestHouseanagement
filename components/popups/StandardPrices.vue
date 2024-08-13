@@ -57,6 +57,7 @@
       :modelValue="isEditModalOpen"
       :item="activeItem"
       :isEdit="isEdit"
+      :houseId="houseId"
       @update:modelValue="closeEditModal"
   />
 </template>
@@ -65,6 +66,7 @@ import AddPeriod from './AddPeriod.vue'
 import {onMounted} from "@vue/runtime-core";
 import {useRestHousesStore} from "../../store/restHouses";
 import { parse, format } from 'date-fns';
+import {computed} from "vue";
 
 const props = defineProps({
   modelValue: {
@@ -85,6 +87,7 @@ const periods = ref([])
 const prices = ref([])
 const activeItem = ref({})
 const store = useRestHousesStore()
+const houseId = computed(() => props.item.id)
 
 const back = () => {
   emit('back', true)
@@ -127,7 +130,7 @@ const deleteItem = (el:any) => {
 }
 
 onMounted(() => {
-  periods.value = props.item.period
-  prices.value = props.item.prices
+  periods.value = props.item?.period
+  prices.value = props.item?.prices
 })
 </script>

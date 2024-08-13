@@ -58,6 +58,7 @@
     :modelValue="isEditModalOpen"
     :item="activeItem"
     :is-edit="isEdit"
+    :houseId="houseId"
     @update:modelValue="closeEditModal"
   />
 </template>
@@ -82,6 +83,7 @@ const prices = ref([])
 const activeItem = ref({})
 const isEdit = ref(false)
 const store = useRestHousesStore()
+const houseId = computed(() => props.item.id)
 
 const handleClose = () => {
   isOpen.value = false

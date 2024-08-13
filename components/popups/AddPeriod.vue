@@ -92,7 +92,8 @@ const props = defineProps({
   },
   isEdit: {
     default: false
-  }
+  },
+  houseId: {}
 });
 
 const emit = defineEmits(['update:isOpen']);
@@ -134,12 +135,11 @@ async function onSubmit (event: FormSubmitEvent<any>) {
       weekend: state.weekend
     }
   }
-  store.addPeriod(props.item.houseId, data)
 
   if(props.isEdit) {
-    store.editPeriod(props.item.houseId, data)
+    store.editPeriod(props.houseId, data)
   } else {
-    store.addPeriod(props.item.houseId, data)
+    store.addPeriod(props.houseId, data)
   }
   isOpen.value = false
   handleClose()
